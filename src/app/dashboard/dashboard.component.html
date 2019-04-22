@@ -1,0 +1,21 @@
+<div class="card text-center ">
+  <div class="card-header">
+    {{cardHeader}}
+  </div>
+  <div class="card-body">
+    <h5 class="card-title">{{cardTitle}}</h5>
+    <p class="card-text">{{cardDescription}}</p>
+    <div class="row">
+    <div class="form-group  col-md-6">
+      <label for="threshold">Threshold Value</label>
+      <input type="number" [(ngModel)]="threshold" (ngModelChange)="onThresholdChange($event)"class="form-control" min="0" id="threshold" aria-describedby="thresholdHelp" placeholder="Enter threshold value">
+    </div>
+    <div class="form-group  col-md-6">
+        <label for="pointNumber">Number Of Point</label>
+        <input type="number" [(ngModel)]="pointNumber" (ngModelChange)="onPointNumberChange($event)"class="form-control" min="2" [max]="maxPointNumber" id="pointNumber" aria-describedby="emailHelp" placeholder="Enter number of point">
+        <small id="pointNumberHelp" class="form-text text-muted">please enter a number bettween 2 and {{maxPointNumber}}</small>
+      </div>
+  </div>
+    <app-mychart [data]='data$ | async' [chartIndex]='0'> </app-mychart>
+  </div>
+</div>

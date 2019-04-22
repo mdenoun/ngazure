@@ -1,0 +1,5 @@
+@import "variables/dimensions";
+.chart-container{
+  width: 100%;
+  height: calc(100vh - #{$header-height} - #{$title-height} - #{$description-height} - #{$fields-height}); //255px);
+}
