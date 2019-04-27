@@ -100,23 +100,31 @@ selectNodeVersion () {
 
 echo Handling node.js deployment.
 
-# 1. KuduSync
-if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
-  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
-  exitWithMessageOnError "Kudu Sync failed"
-fi
+
 
 # 2. Select node version
 selectNodeVersion
 
 # 3. Install npm packages
-if [ -e "$DEPLOYMENT_TARGET/package.json" ]; then
-  cd "$DEPLOYMENT_TARGET"
+if [ -e "$DEPLOYMENT_SOURCE/package.json" ]; then
+  cd "$DEPLOYMENT_SOURCE"
   echo "Running $NPM_CMD install --production"
   eval $NPM_CMD install --production
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
-
+# 3. Install npm packages
+if [ -e "$DEPLOYMENT_SOURCE/angular.json" ]; then
+  cd "$DEPLOYMENT_SOURCE"
+  echo "Running $NPM_CMD run --build"
+  eval $NPM_CMD install --production
+  exitWithMessageOnError "npm failed"
+  cd - > /dev/null
+fi
+# 1. KuduSync
+if [[ "$IN_PLACE_DEPLOYMENT" -ne "1" ]]; then
+  "$KUDU_SYNC_CMD" -v 50 -f "$DEPLOYMENT_SOURCE/dist" -t "$DEPLOYMENT_TARGET" -n "$NEXT_MANIFEST_PATH" -p "$PREVIOUS_MANIFEST_PATH" -i ".git;.hg;.deployment;deploy.sh"
+  exitWithMessageOnError "Kudu Sync failed"
+fi
 ##################################################################################################################################
 echo "Finished successfully."
