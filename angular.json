@@ -29,6 +29,11 @@
                 "glob": "**/*.*",
                 "input": "./server/",
                 "output": "."
+              },
+              {
+                "glob": "./web.config",
+                "input": ".",
+                "output": "."
               }
             ],
             "stylePreprocessorOptions":  { "includePaths": ["src/sass"]},
@@ -98,10 +103,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
-            "stylePreprocessorOptions":  { "includePaths": ["src/sass"]},
-            "styles": [
-              "src/sass/styles.scss"
-            ]
+            "stylePreprocessorOptions":  { "includePaths": ["src/sass"]}
           }
         },
         "lint": {
