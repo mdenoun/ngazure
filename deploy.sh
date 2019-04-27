@@ -116,8 +116,8 @@ fi
 # 3. Install npm packages
 if [ -e "$DEPLOYMENT_SOURCE/angular.json" ]; then
   cd "$DEPLOYMENT_SOURCE"
-  echo "Running $NPM_CMD run --build"
-  eval $NPM_CMD run --build
+  echo "Running $NPM_CMD run-script --build"
+  eval $NPM_CMD run-script build
   exitWithMessageOnError "npm failed"
   cd - > /dev/null
 fi
